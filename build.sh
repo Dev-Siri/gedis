@@ -6,8 +6,8 @@ version="1.0.0"
 flags="-tags netgo -ldflags=-s -ldflags=-w"
 
 declare -a os=("linux" "darwin")
-declare -a arch=("amd64" "arm64" "armv7")
-declare -a incompatible=("darwin-armv7" "linux-armv7")
+declare -a arch=("amd64" "arm64" "arm")
+declare -a incompatible=("darwin-armv7")
 
 mkdir -p $bin_path
 
