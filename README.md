@@ -16,13 +16,13 @@ It also starts a server by default on port 5000 (If PORT env variable is not set
 
 ## Commands
 
-The database is very simple with 5
+The database is very simple with 5 commands.
 
 NOTE: The commands are case-insensitive, so doesn't matter if you are a SQL guy or not.
 
 ### Open commands
 
-These commands can 
+These commands can be accessed from both the CLI and the Rest API.
 
 ### `GET`
 
@@ -102,6 +102,11 @@ load_backup backup-060623-17:12:51.json
 # csv
 load_backup backup-060623-17:12:51.csv
 ```
+
+## Using the Rest API
+
+The database's server only has one endpoint, the root (/)
+Here you can send `GET`, `POST` (`SET`) & `DELETE` Requests to perform actions on the database. Make sure to also pass `?key=...` & `&value=...` based on the type of action.
 
 ## Getting Started
 
