@@ -22,7 +22,7 @@ do
     export GOOS=$os_target
     export GOARCH=$arch_target
 
-    output_path=$bin_path/$bin_name_$version-$os_target-$arch_target
+    output_path=$bin_path/$bin_name-$version-$os_target-$arch_target
     go build $flags -o $output_path/$bin_name
 
     if [ $? -eq 0 ]; then
