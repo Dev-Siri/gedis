@@ -1,0 +1,4 @@
+User-agent: *
+
+Host: https://gedis.vercel.app
+Sitemap: https://gedis.vercel.app/sitemap.xml

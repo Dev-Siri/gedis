@@ -1,0 +1,15 @@
+---
+interface Props {
+  spaces?: number;
+}
+
+const { spaces = 3 } = Astro.props;
+---
+
+{
+  [...new Array(spaces).fill(null)].map(() => (
+    <>
+      . <br />
+    </>
+  ))
+}

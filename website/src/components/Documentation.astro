@@ -1,0 +1,47 @@
+---
+import Terminal from "./Terminal.astro";
+---
+
+<article class="flex mt-10 w-4/5" itemtype="https://schema.org/Article">
+  <section class="w-1/2 flex mt-16 flex-col items-start p-4">
+    <div>
+      <h1 class="font-bold text-3xl leading-relaxed">GET</h1>
+      <p class="text-xl ml-0.5">Gets a value from memory.</p>
+    </div>
+    <div class="mt-10">
+      <h1 class="font-bold text-3xl leading-relaxed">SET</h1>
+      <p class="text-xl ml-0.5">
+        Sets a value with the given key in memory & writes to cache.
+      </p>
+    </div>
+    <div class="mt-10">
+      <h1 class="font-bold text-3xl leading-relaxed">DELETE</h1>
+      <p class="text-xl ml-0.5">
+        Deletes a value from memory & removes it from cache.
+      </p>
+    </div>
+    <div class="mt-10">
+      <h1 class="font-bold text-3xl leading-relaxed">create_backup</h1>
+      <p class="text-xl ml-0.5">
+        Create a backup in the `/backups` folder asynchronously & export it as
+        either JSON or CSV. <br />
+        <br />
+
+        By default, it exports it as JSON. But you can export it as CSV by
+        adding the --csv flag. <br />
+        <br />
+        A backups directory is created if it doesn't exist where all the backup files
+        will be stored. Make sure you don't modify the names of the files, otherwise
+        the Database won't be able to load backups.
+      </p>
+    </div>
+    <div class="mt-44">
+      <h1 class="font-bold text-3xl leading-relaxed">load_backup</h1>
+      <p class="text-xl ml-0.5">
+        Gets/Parses a backup file and replaces the current data in the memory +
+        cache with the backup data.
+      </p>
+    </div>
+  </section>
+  <Terminal />
+</article>

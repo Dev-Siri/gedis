@@ -1,0 +1,157 @@
+import LanguageHeader from "../components/LanguageHeader.astro";
+
+<LanguageHeader icon="mdi:language-typescript" color="#4287f5">
+  TypeScript
+</LanguageHeader>
+
+```ts
+const response = await fetch("http://localhost:3000?key=hello");
+const data = await response.text();
+
+console.log(data); // world | <nil>
+```
+
+<LanguageHeader icon="mdi:language-rust" color="orange">
+  Rust
+</LanguageHeader>
+
+```rust
+use reqwest;
+
+#[tokio::main]
+async fn main() -> Result<(), reqwest::Error> {
+  let url = "http://localhost:3000?key=hello";
+  let response = reqwest::get(url).await?;
+  let data = response.text().await?;
+  println!("{}", data); // world | <nil>
+  Ok(())
+}
+```
+
+<LanguageHeader icon="mdi:language-go" color="#4287f5">
+  Go
+</LanguageHeader>
+
+```go
+package main
+
+import (
+	"fmt"
+	"io/ioutil"
+	"net/http"
+)
+
+func main() {
+	url := "http://localhost:3000?key=hello"
+	response, err := http.Get(url)
+
+  if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+  defer response.Body.Close()
+	data, err := ioutil.ReadAll(response.Body)
+
+  if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+  fmt.Println(string(data)) // world | <nil>
+}
+```
+
+<LanguageHeader icon="dart">Dart</LanguageHeader>
+
+```dart
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+void main() async {
+  final http.Response response = await http.get(Uri.parse('http://localhost:3000?key=hello'));
+  final data = utf8.decode(response.bodyBytes);
+  print(data); // world | <nil>
+}
+```
+
+<LanguageHeader icon="mdi:language-cpp" color="#406fe6" />
+
+```cpp
+#include <iostream>
+#include <curl/curl.h>
+#include <string>
+
+int main() {
+  CURL* curl;
+  CURLcode res;
+  std::string url = "http://localhost:3000?key=hello";
+  curl_global_init(CURL_GLOBAL_DEFAULT);
+  curl = curl_easy_init();
+
+  if (curl) {
+    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+    res = curl_easy_perform(curl);
+
+    if (res == CURLE_OK) {
+      std::cout << curl_easy_strerror(res) << std::endl; // world | <nil>
+    }
+
+    curl_easy_cleanup(curl);
+  }
+  curl_global_cleanup();
+  return 0;
+}
+```
+
+<LanguageHeader icon="mdi:language-python" color="#406fe6">
+  Python
+</LanguageHeader>
+
+```python
+import requests
+
+url = "http://localhost:3000?key=hello"
+response = requests.get(url)
+data = response.text
+print(data) # world | <nil>
+```
+
+<LanguageHeader icon="mdi:language-ruby" color="red">
+  Ruby
+</LanguageHeader>
+
+```ruby
+require 'net/http'
+
+url = URI.parse("http://localhost:3000?key=hello")
+response = Net::HTTP.get_response(url)
+data = response.body
+puts data # world | <nil>
+```
+
+<LanguageHeader icon="mdi:language-swift" color="orange">
+  Swift
+</LanguageHeader>
+
+```swift
+import Foundation
+
+func fetchData() {
+  let url = URL(string: "http://localhost:3000?key=hello")!
+  let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+    if let error = error {
+      print("Error: \(error)")
+      return
+    }
+
+    if let data = data, let dataString = String(data: data, encoding: .utf8) {
+      print(dataString) // world | <nil>
+    }
+  }
+
+  task.resume()
+}
+
+fetchData()
+```

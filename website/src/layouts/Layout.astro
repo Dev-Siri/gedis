@@ -1,0 +1,55 @@
+---
+import { Icon } from "astro-icon";
+import "../styles/globals.css";
+
+import { REPO_LINK } from "../data";
+import Footer from "../components/Footer.astro";
+
+export interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="og:title" content={title} />
+    <meta name="og:description" content={description} />
+    <meta name="og:url" content="https://gedis.vercel.app" />
+    <meta name="og:type" content="website" />
+    <meta name="og:site_name" content="Gedis" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:site" content="@WebDev_Siri" />
+    <meta name="twitter:creator" content="@WebDev_Siri" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://gedis.vercel.app" />
+    <link rel="sitemap" href="/sitemap.xml" />
+    <link
+      rel="preload"
+      href="/fonts/Inter.woff2"
+      as="font"
+      crossorigin="anonymous"
+    />
+    <title>{title}</title>
+  </head>
+  <body class="bg-dark-gray text-white">
+    <header class="flex justify-end w-screen p-4">
+      <a href={REPO_LINK} target="_blank" rel="noopener noreferrer">
+        <Icon name="mdi:github" height={30} />
+      </a>
+    </header>
+    <main class="pt-10">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
