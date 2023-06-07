@@ -15,3 +15,4 @@ gedis
 # Go workspace file
 go.work
 bin
+.cache
