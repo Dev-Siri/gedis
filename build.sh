@@ -2,14 +2,18 @@
 
 bin_name=gedis
 bin_path="bin"
-version="1.0.0"
+version="2.0.0"
 flags="-tags netgo -ldflags=-s -ldflags=-w"
 
 declare -a os=("linux" "darwin")
 declare -a arch=("amd64" "arm64" "arm")
 declare -a incompatible=("darwin-armv7")
 
-mkdir -p $bin_path
+if [ -d "$bin_path" ]; then
+  rm -rf "$bin_path"
+fi
+
+mkdir $bin_path
 
 for os_target in "${os[@]}"
 do

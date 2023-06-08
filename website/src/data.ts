@@ -1,4 +1,4 @@
-export const VERSION = "1.0.0";
+export const VERSION = "2.0.0";
 
 type Platform = "darwin" | "linux";
 type Arch = "arm" | "arm64" | "amd64";
