@@ -55,6 +55,7 @@ func DeleteValue(key string) {
 func DeleteAll() {
 	emptyMap := make(map[string]models.Data)
 	updateCache(emptyMap)
+	storage = emptyMap
 }
 
 func Increment(key string, amount int) {
