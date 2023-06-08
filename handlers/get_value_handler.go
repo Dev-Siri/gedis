@@ -17,7 +17,7 @@ func GetValueHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	value := db.GetValue(key)
+	value := db.GetValue(key).Value
 
 	if value == "" {
 		fmt.Fprintf(w, "%v", nil)

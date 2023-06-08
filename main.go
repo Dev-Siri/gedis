@@ -33,11 +33,14 @@ func main() {
 		
 		os.Exit(0)
 	}()
-		
+
 	if err := db.InitializeDB(); err != nil {
 		log.Fatalf("Database initialization failed")
 		return
 	}
 
+	// Runs every 5 seconds and checks the db
+	// for expired values & other stuff then deletes it
+	go db.CleanDB()
 	core.RunCLI()
 }

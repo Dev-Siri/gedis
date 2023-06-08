@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/Dev-Siri/gedis/constants"
+	"github.com/Dev-Siri/gedis/models"
 	"github.com/Dev-Siri/gedis/utils"
 )
 
@@ -73,8 +74,8 @@ func LoadBackup(filename string) {
 			return
 		}
 
-		for key, value := range decodedMap {
-			SetValue(key, value)
+		for key, data := range decodedMap {
+			SetValue(key, data.Value, data.TTL)
 		}
 	} else if fileType == "json" {
 		backupBytes, backupReadError := os.ReadFile(filePath)
@@ -84,15 +85,15 @@ func LoadBackup(filename string) {
 			return
 		}
 
-		data := make(map[string]string)
+		data := make(map[string]models.Data)
 
 		if err := json.Unmarshal(backupBytes, &data); err != nil {
 			fmt.Println("Failed to decode backup")
 			return
 		}
 
-		for key, value := range data {
-			SetValue(key, value)
+		for key, data := range data {
+			SetValue(key, data.Value, data.TTL)
 		}
 	} else {
 		fmt.Println("Unknown backup file type")

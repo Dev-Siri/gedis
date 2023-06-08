@@ -4,9 +4,11 @@ import (
 	"encoding/csv"
 	"io"
 	"os"
+
+	"github.com/Dev-Siri/gedis/models"
 )
 
-func EncodeToCSV(data map[string]string, file *os.File) error {
+func EncodeToCSV(data map[string]models.Data, file *os.File) error {
 	writer := csv.NewWriter(file)
 	defer writer.Flush()
 
@@ -16,8 +18,8 @@ func EncodeToCSV(data map[string]string, file *os.File) error {
 		return err
 	}
 
-	for key, value := range data {
-		row := []string{key, value}
+	for key, data := range data {
+		row := []string{key, data.Value}
 		if err := writer.Write(row); err != nil {
 			return err
 		}
@@ -26,10 +28,10 @@ func EncodeToCSV(data map[string]string, file *os.File) error {
 	return nil
 }
 
-func DecodeCSV(file *os.File) (map[string]string, error) {
+func DecodeCSV(file *os.File) (map[string]models.Data, error) {
 	reader := csv.NewReader(file)
 
-	data := make(map[string]string)
+	data := make(map[string]models.Data)
 
 	for {
 		row, err := reader.Read()
@@ -44,7 +46,7 @@ func DecodeCSV(file *os.File) (map[string]string, error) {
 		if len(row) == 2 {
 			key := row[0]
 			value := row[1]
-			data[key] = value
+			data[key] = models.Data{Value: value}
 		}
 	}
 

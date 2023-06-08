@@ -12,11 +12,11 @@ func DeleteValueHandler(w http.ResponseWriter, r *http.Request) {
 
 	key := searchParams.Get("key")
 
-	if key == "" {
-		http.Error(w, "Key not provided", http.StatusBadRequest)
-		return
+	if key == "*" {
+		db.DeleteAll()
+	} else {
+		db.DeleteValue(key)
 	}
 
-	db.DeleteValue(key)
 	fmt.Fprintf(w, "Deleted successfully")
 }

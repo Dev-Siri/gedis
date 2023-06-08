@@ -16,6 +16,10 @@ func ParseCommand(command string) {
 		setValue(cmdChunks)	
 	case "delete":
 		deleteValue(cmdChunks)
+	case "increment":
+		incrementValue(cmdChunks)
+	case "decrement":
+		decrementValue(cmdChunks)
 	case "create_backup":
 		createBackup(cmdChunks)
 	case "load_backup":

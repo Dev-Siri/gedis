@@ -13,7 +13,7 @@ func getValue(cmdChunks []string) {
 	}
 
 	key := cmdChunks[1]
-	value := db.GetValue(key)
+	value := db.GetValue(key).Value
 
 	// Since map is a string -> string store, it returns ""
 	// So it checks for an "" and then returns actual nil

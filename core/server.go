@@ -17,6 +17,8 @@ func StartServer(port string) {
 			handlers.SetValueHandler(w, r)
 		case http.MethodDelete:
 			handlers.DeleteValueHandler(w, r)
+		case http.MethodPatch:
+			handlers.IncrementOrDecrementValueHandler(w, r)
 		default:
 			http.Error(w, "Method not allowed.", http.StatusMethodNotAllowed)
 		}

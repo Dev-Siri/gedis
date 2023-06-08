@@ -14,5 +14,9 @@ func deleteValue(cmdChunks []string) {
 
 	key := cmdChunks[1]
 
-	db.DeleteValue(key)
+	if key == "*" {
+		db.DeleteAll()
+	} else {
+		db.DeleteValue(key)
+	}
 }

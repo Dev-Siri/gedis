@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/Dev-Siri/gedis/constants"
+	"github.com/Dev-Siri/gedis/models"
 )
 
 func initCache() error {	
@@ -28,14 +29,14 @@ func initCache() error {
 	return nil
 }
 
-func readFromCache() (map[string]string, error) {
+func readFromCache() (map[string]models.Data, error) {
 	fileContent, err := os.ReadFile(constants.MapJsonPath)
 
 	if err != nil {
 		return nil, err
 	}
 
-	mapJsonContent := make(map[string]string)
+	mapJsonContent := make(map[string]models.Data)
 
 	if err := json.Unmarshal(fileContent, &mapJsonContent); err != nil {
 		return nil, err
@@ -44,7 +45,21 @@ func readFromCache() (map[string]string, error) {
 	return mapJsonContent, nil
 }
 
-func writeToCache(key string, value string) {
+func updateCache(modifiedMapJson map[string]models.Data) {
+	newMapJson, jsonError := json.Marshal(modifiedMapJson)
+
+	if jsonError != nil {
+		fmt.Println("Failed to convert new values to JSON")
+		return
+	}
+
+	if err := os.WriteFile(constants.MapJsonPath, newMapJson, 0644); err != nil {
+		fmt.Println("Failed to write new values to cache")
+		return
+	}
+}
+
+func writeToCache(key string, value string, ttl int, createdAt string) {
 	mapJsonContent, fileReadError := readFromCache()
 
 	if fileReadError != nil {
@@ -52,19 +67,19 @@ func writeToCache(key string, value string) {
 		return
 	}
 
-	mapJsonContent[key] = value
+	creationDate := createdAt
 
-	modifiedMapJson, jsonError := json.Marshal(mapJsonContent)
-
-	if jsonError != nil {
-		fmt.Println("Failed to convert new values to JSON")
-		return
+	if ttl == 0 {
+		creationDate = ""
 	}
 
-	if err := os.WriteFile(constants.MapJsonPath, modifiedMapJson, 0644); err != nil {
-		fmt.Println("Failed to write new values to cache")
-		return
+	mapJsonContent[key] = models.Data{
+		Value: value,
+		TTL: ttl,
+		CreatedAt: creationDate,
 	}
+
+	go updateCache(mapJsonContent)
 }
 
 func deleteFromCache(key string) {
@@ -76,15 +91,5 @@ func deleteFromCache(key string) {
 
 	delete(mapJsonContent, key)
 
-	modifiedMapJson, jsonError := json.Marshal(mapJsonContent)
-
-	if jsonError != nil {
-		fmt.Println("Failed to convert new values to JSON")
-		return
-	}
-
-	if err := os.WriteFile(constants.MapJsonPath, modifiedMapJson, 0644); err != nil {
-		fmt.Println("Failed to write new values to cache")
-		return
-	}
+	go updateCache(mapJsonContent)
 }

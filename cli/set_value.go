@@ -2,6 +2,8 @@ package cli
 
 import (
 	"fmt"
+	"strconv"
+	"strings"
 
 	"github.com/Dev-Siri/gedis/db"
 )
@@ -19,5 +21,20 @@ func setValue(cmdChunks []string) {
 
 	key := cmdChunks[1]
 	value := cmdChunks[2]
-	db.SetValue(key, value)
+
+	var ttl int = 0
+
+	if cmdChunksLen > 3 {
+		cmdTTL := strings.TrimPrefix(cmdChunks[3], "--ttl=")
+		timeToLive, err := strconv.Atoi(cmdTTL)
+
+		if err != nil {
+			fmt.Println("Failed to convert time to live as int")
+			return
+		}
+
+		ttl = timeToLive
+	}
+
+	db.SetValue(key, value, ttl)
 }
