@@ -115,17 +115,33 @@ Here you can send `GET`, `POST` (`SET`) & `DELETE` Requests to perform actions o
 $ git clone https://github.com/Dev-Siri/gedis.git
 ```
 
-- Compile the project. Make sure you have [Go](https://go.dev) installed on your system.
+- Compile the project. Make sure you have [Go](https://go.dev) installed on your system. Then run the build.sh file.
 ```sh
-$ go build -tags netgo -ldflags '-s -w' -o gedis
+$ chmod +x build.sh
+
+$ ./build.sh
 ```
 
-- Then just run the binary.
+- Then run the binary according to your CPU architecture & OS.
 ```sh
-$ ./gedis
+$ ./bin/gedis-[VERSION]-[OS]-[ARCH]/gedis
 ```
 
 This will start a server on your machine w/ PORT env (default 5000) + a CLI that will allow you to interact with the database.
+
+## Running with Docker
+
+- Pull the image from GitHub's Container Registry.
+
+```sh
+$ docker pull ghcr.io/dev-siri/gedis:latest
+```
+
+- Then pass a PORT & run the container with the "-it" flag
+
+```sh
+$ docker run -p <PORT>:8080 -it ghcr.io/dev-siri/gedis:latest
+```
 
 ## License
 
