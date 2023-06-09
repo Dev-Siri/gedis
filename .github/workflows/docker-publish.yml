@@ -21,4 +21,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/Dev-Siri/gedis:latest
+          tags: ghcr.io/dev-siri/gedis:latest
