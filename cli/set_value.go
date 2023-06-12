@@ -12,10 +12,10 @@ func setValue(cmdChunks []string) {
 	cmdChunksLen := len(cmdChunks)
 
 	if cmdChunksLen < 2 {
-		fmt.Println("Key and Value not provided for SET.")
+		fmt.Println("(Error) Key and Value not provided for SET.")
 		return
 	} else if cmdChunksLen < 3 {
-		fmt.Println("Value not provided for SET.")
+		fmt.Println("(Error) Value not provided for SET.")
 		return
 	}
 
@@ -29,7 +29,7 @@ func setValue(cmdChunks []string) {
 		timeToLive, err := strconv.Atoi(cmdTTL)
 
 		if err != nil {
-			fmt.Println("Failed to convert time to live as int")
+			fmt.Println("(Error) Failed to convert time to live as int")
 			return
 		}
 

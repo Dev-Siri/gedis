@@ -12,7 +12,7 @@ import (
 func RunCLI() {
 	reader := bufio.NewReader(os.Stdin)
 
-	fmt.Println("Enter .exit to stop the server.")
+	fmt.Println("(Info) Enter .exit to stop the server.")
 
 	for {
 		fmt.Print("gedis> ")
@@ -28,5 +28,5 @@ func RunCLI() {
 		}
 	}
 
-	fmt.Println("Shutting down Gedis server")
+	fmt.Println("(Info) Shutting down Gedis server")
 }

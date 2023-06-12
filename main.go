@@ -1,6 +1,7 @@
 package main
 
 import (
+	"embed"
 	"fmt"
 	"log"
 	"os"
@@ -9,7 +10,14 @@ import (
 
 	"github.com/Dev-Siri/gedis/core"
 	"github.com/Dev-Siri/gedis/db"
+	"github.com/Dev-Siri/gedis/embeds"
 )
+
+//go:embed pages
+var PagesFS embed.FS
+
+//go:embed public
+var PublicFS embed.FS
 
 func main() {
 	log.Println("Starting Gedis server")
@@ -21,6 +29,9 @@ func main() {
 		port = "5000"
 	}
 
+	embeds.Pages = PagesFS
+	embeds.StaticFiles = PublicFS
+
 	go core.StartServer(port)
 	log.Printf("Gedis server listening on port %s\n", port)
 	
@@ -29,7 +40,7 @@ func main() {
 	
 	go func() {
 		<-interrupt
-		fmt.Println("\nShutting down Gedis server")
+		fmt.Println("\n(Info) Shutting down Gedis server")
 		
 		os.Exit(0)
 	}()

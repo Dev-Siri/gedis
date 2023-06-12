@@ -1,0 +1,48 @@
+@font-face {
+  font-family: "Inter";
+  src: url("/public/fonts/Inter.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+body {
+  background-color: #121212;
+  color: white;
+  font-family: "Inter";
+  display: grid;
+  place-items: center;
+  padding-top: 40px;
+}
+
+h1 {
+  font-size: 80px;
+}
+
+.sub-heading {
+  font-size: 30px;
+  margin-top: -50px;
+}
+
+.logo {
+  position: absolute;
+  margin-right: 360px;
+  margin-bottom: 100px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 30%;
+}
+
+form input {
+  padding: 15px;
+  background-color: #2b2b2b;
+  color: white;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  font-size: 18px;
+  font-family: "Inter";
+}

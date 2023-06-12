@@ -8,7 +8,7 @@ import (
 
 func deleteValue(cmdChunks []string) {
 	if len(cmdChunks) < 2 {
-		fmt.Println("Key not provided for DELETE.")
+		fmt.Println("(Error) Key not provided for DELETE.")
 		return
 	}
 

@@ -8,7 +8,7 @@ import (
 
 func getValue(cmdChunks []string) {
 	if len(cmdChunks) < 2 {
-		fmt.Println("Key not provided for GET.")
+		fmt.Println("(Error) Key not provided for GET.")
 		return
 	}
 

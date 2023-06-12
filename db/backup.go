@@ -14,7 +14,7 @@ import (
 func MakeBackup(backupType string) {
 	if _, err := os.Stat(constants.BackupFolder); os.IsNotExist(err) {		
 		if err := os.Mkdir(constants.BackupFolder, 0755); err != nil {
-			fmt.Println("Failed to create backup folder")
+			fmt.Println("(Error) Failed to create backup folder")
 			return
 		}
 	}
@@ -24,7 +24,7 @@ func MakeBackup(backupType string) {
 
 	if _, err := os.Stat(backupFilePath); os.IsNotExist(err) {
 		if _, err := os.Create(backupFilePath); err != nil {
-			fmt.Println("Failed to create backup snapshot file")
+			fmt.Println("(Error) Failed to create backup snapshot file")
 			return
 		}
 
@@ -32,19 +32,19 @@ func MakeBackup(backupType string) {
 			backupFile, err := os.Create(backupFilePath)
 
 			if err != nil {
-				fmt.Println("Failed to create CSV backup file")
+				fmt.Println("(Error) Failed to create CSV backup file")
 				return
 			}
 	
 			if err := utils.EncodeToCSV(storage, backupFile); err != nil {
-				fmt.Println("Failed to encode backup as CSV")
+				fmt.Println("(Error) Failed to encode backup as CSV")
 				return
 			}
 		} else {
 			backupContent, jsonError := json.Marshal(storage)
 	
 			if jsonError != nil {
-				fmt.Println("Failed to encode backup as JSON")
+				fmt.Println("(Error) Failed to encode backup as JSON")
 				return
 			}
 	
@@ -61,7 +61,7 @@ func LoadBackup(filename string) {
 		file, csvOpenError := os.Open(filePath)
 
 		if csvOpenError != nil {
-			fmt.Println("Failed to read backup as CSV")
+			fmt.Println("(Error) Failed to read backup as CSV")
 			return
 		}
 
@@ -70,7 +70,7 @@ func LoadBackup(filename string) {
 		decodedMap, decodeError := utils.DecodeCSV(file)
 
 		if decodeError != nil {
-			fmt.Println("Failed to decode backup")
+			fmt.Println("(Error) Failed to decode backup")
 			return
 		}
 
@@ -81,14 +81,14 @@ func LoadBackup(filename string) {
 		backupBytes, backupReadError := os.ReadFile(filePath)
 
 		if backupReadError != nil {
-			fmt.Println("Failed to read backup as JSON")
+			fmt.Println("(Error) Failed to read backup as JSON")
 			return
 		}
 
 		data := make(map[string]models.Data)
 
 		if err := json.Unmarshal(backupBytes, &data); err != nil {
-			fmt.Println("Failed to decode backup")
+			fmt.Println("(Error) Failed to decode backup")
 			return
 		}
 
@@ -96,9 +96,9 @@ func LoadBackup(filename string) {
 			SetValue(key, data.Value, data.TTL)
 		}
 	} else {
-		fmt.Println("Unknown backup file type")
+		fmt.Println("(Error) Unknown backup file type")
 		return
 	}
 
-	fmt.Println("Backup loaded into memory")
+	fmt.Println("(Info) Backup loaded into memory")
 }

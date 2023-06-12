@@ -19,5 +19,5 @@ func createBackup(cmdChunks []string) {
 
 	go db.MakeBackup(backupType)
 
-	fmt.Println("Backup created successfully")
+	fmt.Println("(Info) Backup created successfully")
 }

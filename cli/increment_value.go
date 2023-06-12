@@ -13,7 +13,7 @@ func incrementValue(cmdChunks []string) {
 	var amount string = "1"
 
 	if cmdChunksLen < 2 {
-		fmt.Println("Key not provided for INCREMENT.")
+		fmt.Println("(Error) Key not provided for INCREMENT.")
 		return
 	}
 	
@@ -26,7 +26,7 @@ func incrementValue(cmdChunks []string) {
 	amountAsInt, err := strconv.Atoi(amount)
 
 	if err != nil {
-		fmt.Println("Amount must be an integer value")
+		fmt.Println("(Error) Amount must be an integer value")
 		return
 	}
 

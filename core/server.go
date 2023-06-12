@@ -5,24 +5,19 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/Dev-Siri/gedis/handlers"
+	"github.com/Dev-Siri/gedis/embeds"
+	"github.com/Dev-Siri/gedis/routes"
 )
 
 func StartServer(port string) {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		switch r.Method {
-		case http.MethodGet:
-			handlers.GetValueHandler(w, r)
-		case http.MethodPost:
-			handlers.SetValueHandler(w, r)
-		case http.MethodDelete:
-			handlers.DeleteValueHandler(w, r)
-		case http.MethodPatch:
-			handlers.IncrementOrDecrementValueHandler(w, r)
-		default:
-			http.Error(w, "Method not allowed.", http.StatusMethodNotAllowed)
-		}
-	})
+	staticFS := http.FS(embeds.StaticFiles)
+	fs := http.FileServer(staticFS)
+
+	http.Handle("/public/", fs)
+
+	go http.HandleFunc("/", routes.Root)
+	go http.HandleFunc("/admin", routes.Admin)
+	go http.HandleFunc("/admin/login", routes.AdminLogin)
 
 	addr := fmt.Sprintf(":%s", port)
 

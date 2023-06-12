@@ -8,7 +8,7 @@ import (
 
 func loadBackup(cmdChunks []string) {
 	if len(cmdChunks) < 2 {
-		fmt.Println("Please specify backup file name")
+		fmt.Println("(Error) Please specify backup file name")
 		return
 	}
 

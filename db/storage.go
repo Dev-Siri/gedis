@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/Dev-Siri/gedis/auth"
 	"github.com/Dev-Siri/gedis/models"
 )
 
@@ -12,6 +13,10 @@ var storage map[string]models.Data = make(map[string]models.Data)
 
 func InitializeDB() error {
 	if err := initCache(); err != nil {
+		return err
+	}
+
+	if err := auth.InitAuth(); err != nil {
 		return err
 	}
 
@@ -64,7 +69,7 @@ func Increment(key string, amount int) {
 	valueAsInt, err := strconv.Atoi(value.Value)
 
 	if err != nil {
-		fmt.Println("Cannot increment a non-integer value")
+		fmt.Println("(Error) Cannot increment a non-integer value")
 		return
 	}
 
@@ -79,7 +84,7 @@ func Decrement(key string, amount int) {
 	valueAsInt, err := strconv.Atoi(value.Value)
 
 	if err != nil {
-		fmt.Println("Cannot decrement a non-integer value")
+		fmt.Println("(Error) Cannot decrement a non-integer value")
 		return
 	}
 

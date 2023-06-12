@@ -15,7 +15,7 @@ func CleanDB() {
 		mapJsonContent, err := readFromCache()
 
 		if err != nil {
-			fmt.Println("Database cleaner: cleaning iteration failed.")
+			fmt.Println("(Error) Database cleaner: cleaning iteration failed.")
 			return
 		}
 
@@ -33,7 +33,7 @@ func clearExpiredTTLValues(key string, data models.Data) {
 	expired, err := utils.IsExpired(data.CreatedAt, data.TTL)
 
 	if err != nil {
-		fmt.Printf("Database cleaner: Failed to parse `map[%s].CreatedAt` as datetime\n", key)
+		fmt.Printf("(Error) Database cleaner: Failed to parse `map[%s].CreatedAt` as datetime\n", key)
 		return
 	}
 
