@@ -2,7 +2,7 @@
 
 bin_name=gedis
 bin_path="bin"
-version="2.0.0"
+version="2.2.0"
 flags="-tags netgo -ldflags=-s -ldflags=-w"
 
 declare -a os=("linux" "darwin")
