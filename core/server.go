@@ -1,7 +1,6 @@
 package core
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
@@ -19,7 +18,7 @@ func StartServer(port string) {
 	go http.HandleFunc("/admin", routes.Admin)
 	go http.HandleFunc("/admin/login", routes.AdminLogin)
 
-	addr := fmt.Sprintf(":%s", port)
+	addr := ":" + port
 
 	if err := http.ListenAndServe(addr, nil); err != nil {
 		log.Fatal(err)

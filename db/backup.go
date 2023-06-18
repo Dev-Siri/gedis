@@ -20,7 +20,7 @@ func MakeBackup(backupType string) {
 	}
 
 	storage := getStorage()
-	backupFilePath := fmt.Sprintf("%s/backup-%s.%s", constants.BackupFolder, utils.GetCurrentTimestamp(), backupType)
+	backupFilePath := constants.BackupFolder + "/backup-" + utils.GetCurrentTimestamp() + "." + backupType
 
 	if _, err := os.Stat(backupFilePath); os.IsNotExist(err) {
 		if _, err := os.Create(backupFilePath); err != nil {
@@ -54,7 +54,7 @@ func MakeBackup(backupType string) {
 }
 
 func LoadBackup(filename string) {
-	filePath := fmt.Sprintf("backups/%s", filename)
+	filePath := "backups/" + filename
 	fileType := strings.Split(filename, ".")[1]
 
 	if fileType == "csv" {
