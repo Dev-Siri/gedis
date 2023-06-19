@@ -3,7 +3,7 @@
 bin_name=gedis
 bin_path="bin"
 version="2.2.0"
-flags="-tags netgo -ldflags=-s -ldflags=-w"
+flags=(-tags netgo -ldflags '-extldflags "-static" -s -w' -gcflags 'all=-N -l -B -C -S -D -M')
 
 declare -a os=("linux" "darwin")
 declare -a arch=("amd64" "arm64" "arm")
@@ -27,7 +27,7 @@ do
     export GOARCH=$arch_target
 
     output_path=$bin_path/$bin_name-$version-$os_target-$arch_target
-    go build $flags -o $output_path/$bin_name
+    go build "${flags[@]}" -o "$output_path/$bin_name"
 
     if [ $? -eq 0 ]; then
       echo "Build successful for $os_target-$arch_target"

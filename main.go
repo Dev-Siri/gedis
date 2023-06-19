@@ -34,14 +34,14 @@ func main() {
 
 	go core.StartServer(port)
 	log.Printf("Gedis server listening on port %s\n", port)
-	
+
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt, syscall.SIGTERM)
-	
+
 	go func() {
 		<-interrupt
 		fmt.Println("\n(Info) Shutting down Gedis server")
-		
+
 		os.Exit(0)
 	}()
 
