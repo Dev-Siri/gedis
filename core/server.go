@@ -2,25 +2,23 @@ package core
 
 import (
 	"log"
-	"net/http"
 
-	"github.com/Dev-Siri/gedis/embeds"
 	"github.com/Dev-Siri/gedis/routes"
+	"github.com/buaazp/fasthttprouter"
+	"github.com/valyala/fasthttp"
 )
 
 func StartServer(port string) {
-	staticFS := http.FS(embeds.StaticFiles)
-	fs := http.FileServer(staticFS)
+	router := fasthttprouter.New()
 
-	http.Handle("/public/", fs)
+	router.GET("/public/*filepath", routes.StaticRoutes)
 
-	go http.HandleFunc("/", routes.Root)
-	go http.HandleFunc("/admin", routes.Admin)
-	go http.HandleFunc("/admin/login", routes.AdminLogin)
+	go routes.RegisterRootRoutes(router)
+	go routes.RegisterAdminRoutes(router)
 
 	addr := ":" + port
 
-	if err := http.ListenAndServe(addr, nil); err != nil {
+	if err := fasthttp.ListenAndServe(addr, router.Handler); err != nil {
 		log.Fatal(err)
 	}
 }

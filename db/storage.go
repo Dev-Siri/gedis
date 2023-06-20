@@ -46,9 +46,9 @@ func SetValue(key string, value string, ttl int) {
 	}
 
 	storage[key] = models.Data{
-		Value: value,
+		Value:     value,
 		CreatedAt: createdAt,
-		TTL: ttl,
+		TTL:       ttl,
 	}
 }
 

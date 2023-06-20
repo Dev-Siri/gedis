@@ -9,7 +9,7 @@ import (
 )
 
 func authSubActions(cmdChunks []string) {
-  if len(cmdChunks) < 2 {
+	if len(cmdChunks) < 2 {
 		fmt.Println("(Error) The `AUTH` action requires a sub action.")
 		return
 	}
@@ -28,11 +28,11 @@ func authSubActions(cmdChunks []string) {
 	case "session":
 		session := auth.GetSession()
 		fmt.Printf(
-			"Session: {\n  username: %s,  session_id: %s\n}",
+			"Session: {\n  username: %s,\n  session_id: %s\n}\n",
 			session.Username,
 			session.SessionId,
 		)
 	default:
-		fmt.Println("(Error) Invalid sub actions for `AUTH`")
+		fmt.Println("(Error) Invalid sub action for `AUTH`")
 	}
 }

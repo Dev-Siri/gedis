@@ -1,28 +1,24 @@
 package root_handlers
 
 import (
-	"fmt"
-	"net/http"
-
 	"github.com/Dev-Siri/gedis/db"
+	"github.com/valyala/fasthttp"
 )
 
-func GetValueHandler(w http.ResponseWriter, r *http.Request) {
-	searchParams := r.URL.Query()
-
-	key := searchParams.Get("key")
+func GetValueHandler(ctx *fasthttp.RequestCtx) {
+	key := string(ctx.QueryArgs().Peek("key"))
 
 	if key == "" {
-		http.Error(w, "Key not provided", http.StatusBadRequest)
+		ctx.Error("Key not provided", fasthttp.StatusBadRequest)
 		return
 	}
 
 	value := db.GetValue(key).Value
 
 	if value == "" {
-		fmt.Fprintf(w, "%v", nil)
+		ctx.Write([]byte("<nil>"))
 		return
 	}
 
-	fmt.Fprintf(w, "%s", value)
+	ctx.Write([]byte(value))
 }

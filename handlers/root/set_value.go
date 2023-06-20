@@ -1,45 +1,29 @@
 package root_handlers
 
 import (
-	"fmt"
-	"net/http"
-	"strconv"
-
 	"github.com/Dev-Siri/gedis/db"
+	"github.com/valyala/fasthttp"
 )
 
-func SetValueHandler(w http.ResponseWriter, r *http.Request) {
-	searchParams := r.URL.Query()
+func SetValueHandler(ctx *fasthttp.RequestCtx) {
+	searchParams := ctx.QueryArgs()
 
-	key := searchParams.Get("key")
-	value := searchParams.Get("value")
-	ttlSearchParam := searchParams.Get("ttl")
+	key := string(searchParams.Peek("key"))
+	value := string(searchParams.Peek("value"))
+	ttl := searchParams.GetUintOrZero("ttl")
 
 	if key == "" {
-		http.Error(w, "Key not provided", http.StatusBadRequest)
+		ctx.Error("Key not provided", fasthttp.StatusBadRequest)
 		return
 	}
 
 	if value == "" {
-		http.Error(w, "Value not provided", http.StatusBadRequest)
+		ctx.Error("Value not provided", fasthttp.StatusBadRequest)
 		return
 	}
 
-	var ttl int = 0
-
-	if ttlSearchParam == "" {
-		timeToLive, err := strconv.Atoi(ttlSearchParam)
-
-		if err != nil {
-			http.Error(w, "Failed to convert time-to-live to int", http.StatusBadRequest)
-			return
-		}
-
-		ttl = timeToLive
-	}
-	
 	db.SetValue(key, value, ttl)
 
-	w.WriteHeader(http.StatusCreated)
-	fmt.Printf("%s", value)
+	ctx.SetStatusCode(fasthttp.StatusCreated)
+	ctx.Write([]byte(value))
 }

@@ -1,55 +1,52 @@
 package admin_login_handlers
 
 import (
-	"html/template"
-	"net/http"
 	"strings"
 
 	"github.com/Dev-Siri/gedis/auth"
 	"github.com/Dev-Siri/gedis/embeds"
+	"github.com/valyala/fasthttp"
+	"github.com/valyala/fasttemplate"
 )
 
-func FormDataLogin(w http.ResponseWriter, r *http.Request) {
-	if err := r.ParseForm(); err != nil {
-		template, tmplParseError := template.ParseFS(embeds.Pages, "pages/error.tmpl")
+func FormDataLogin(ctx *fasthttp.RequestCtx) {
+	formData := ctx.Request.PostArgs()
 
-		if tmplParseError != nil {
-			http.Error(w, "Failed to serve HTML", http.StatusInternalServerError)
-			return
-		}
-
-		template.Execute(w, err.Error())
-	}
-
-	username := r.Form.Get("username")
-	password := r.Form.Get("password")
+	username := string(formData.Peek("username"))
+	password := string(formData.Peek("password"))
 
 	if username == "" || password == "" {
-		template, tmplParseError := template.ParseFS(embeds.Pages, "pages/error.tmpl")
+		template, tmplParseError := embeds.Pages.ReadFile("pages/error.tmpl")
 
 		if tmplParseError != nil {
-			http.Error(w, "Failed to serve HTML", http.StatusInternalServerError)
+			ctx.Error("Failed to serve HTML", fasthttp.StatusInternalServerError)
 			return
 		}
 
-		template.Execute(w, "Username or Password was not provided")
+		ctx.SetContentType("text/html")
+		fasttemplate.Execute(string(template), "{{", "}}", ctx.Response.BodyWriter(), map[string]interface{}{
+			"error": "Username or Password was not provided",
+		})
 		return
 	}
 
 	if err := auth.Login(username, password); err != nil {
-		template, tmplParseError := template.ParseFS(embeds.Pages, "pages/error.tmpl")
+		template, tmplParseError := embeds.Pages.ReadFile("pages/error.tmpl")
 
 		if tmplParseError != nil {
-			http.Error(w, "Failed to serve HTML", http.StatusInternalServerError)
+			ctx.Error("Failed to serve HTML", fasthttp.StatusInternalServerError)
 			return
 		}
 
 		errorMessage := err.Error()
 		formatedErrorMessage := strings.ToUpper(string(errorMessage[0])) + errorMessage[1:]
 
-		template.Execute(w, formatedErrorMessage)
+		ctx.SetContentType("text/html")
+		fasttemplate.Execute(string(template), "{{", "}}", ctx.Response.BodyWriter(), map[string]interface{}{
+			"error": formatedErrorMessage,
+		})
 		return
 	}
 
-	http.Redirect(w, r, "/admin", http.StatusSeeOther)
+	ctx.Redirect("/admin", fasthttp.StatusSeeOther)
 }

@@ -23,7 +23,7 @@ func Login(username string, password string) error {
 			return fmt.Errorf("password is incorrect")
 		}
 
-		newSessionId := uuid.New().String()
+		newSessionId := uuid.NewString()
 
 		authJson.SessionID = newSessionId
 
@@ -47,12 +47,12 @@ func Login(username string, password string) error {
 			return fmt.Errorf("failed to hash password")
 		}
 
-		sessionId := uuid.New().String()
+		sessionId := uuid.NewString()
 
 		credentials := models.Auth{
 			SessionID: sessionId,
-			Username: username,
-			Password: string(encryptedPassword),
+			Username:  username,
+			Password:  string(encryptedPassword),
 		}
 
 		SetSession(sessionId)

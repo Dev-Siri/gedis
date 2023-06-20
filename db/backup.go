@@ -12,7 +12,7 @@ import (
 )
 
 func MakeBackup(backupType string) {
-	if _, err := os.Stat(constants.BackupFolder); os.IsNotExist(err) {		
+	if _, err := os.Stat(constants.BackupFolder); os.IsNotExist(err) {
 		if err := os.Mkdir(constants.BackupFolder, 0755); err != nil {
 			fmt.Println("(Error) Failed to create backup folder")
 			return
@@ -35,20 +35,20 @@ func MakeBackup(backupType string) {
 				fmt.Println("(Error) Failed to create CSV backup file")
 				return
 			}
-	
+
 			if err := utils.EncodeToCSV(storage, backupFile); err != nil {
 				fmt.Println("(Error) Failed to encode backup as CSV")
 				return
 			}
 		} else {
 			backupContent, jsonError := json.Marshal(storage)
-	
+
 			if jsonError != nil {
 				fmt.Println("(Error) Failed to encode backup as JSON")
 				return
 			}
-	
-			os.WriteFile(backupFilePath, backupContent, 0644)			
+
+			os.WriteFile(backupFilePath, backupContent, 0644)
 		}
 	}
 }

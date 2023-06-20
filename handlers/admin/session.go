@@ -1,22 +1,27 @@
 package admin_handlers
 
 import (
-	"html/template"
 	"net/http"
 
 	"github.com/Dev-Siri/gedis/auth"
 	"github.com/Dev-Siri/gedis/embeds"
+	"github.com/valyala/fasthttp"
+	"github.com/valyala/fasttemplate"
 )
 
-func AdminSession(w http.ResponseWriter, r *http.Request) {
-	template, err := template.ParseFS(embeds.Pages, "pages/session.tmpl")
+func AdminSession(ctx *fasthttp.RequestCtx) {
+	template, err := embeds.Pages.ReadFile("pages/session.tmpl")
 
 	if err != nil {
-		http.Error(w, "Failed to serve HTML", http.StatusInternalServerError)
+		ctx.Error("Failed to serve HTML", http.StatusInternalServerError)
 		return
 	}
 
 	session := auth.GetSession()
 
-	template.Execute(w, session)
+	ctx.SetContentType("text/html")
+	fasttemplate.Execute(string(template), "{{", "}}", ctx.Response.BodyWriter(), map[string]interface{}{
+		"username":  session.Username,
+		"sessionId": session.SessionId,
+	})
 }

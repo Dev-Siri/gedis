@@ -22,7 +22,7 @@ func setValue(cmdChunks []string) {
 	key := cmdChunks[1]
 	value := cmdChunks[2]
 
-	var ttl int = 0
+	var ttl int
 
 	if cmdChunksLen > 3 {
 		cmdTTL := strings.TrimPrefix(cmdChunks[3], "--ttl=")

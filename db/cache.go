@@ -9,8 +9,8 @@ import (
 	"github.com/Dev-Siri/gedis/models"
 )
 
-func initCache() error {	
-	if _, err := os.Stat(constants.CacheFolder); os.IsNotExist(err) {		
+func initCache() error {
+	if _, err := os.Stat(constants.CacheFolder); os.IsNotExist(err) {
 		if err := os.Mkdir(constants.CacheFolder, 0755); err != nil {
 			fmt.Println("(Error) Failed to create cache folder")
 			return err
@@ -74,8 +74,8 @@ func writeToCache(key string, value string, ttl int, createdAt string) {
 	}
 
 	mapJsonContent[key] = models.Data{
-		Value: value,
-		TTL: ttl,
+		Value:     value,
+		TTL:       ttl,
 		CreatedAt: creationDate,
 	}
 

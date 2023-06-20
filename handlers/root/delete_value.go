@@ -1,16 +1,12 @@
 package root_handlers
 
 import (
-	"fmt"
-	"net/http"
-
 	"github.com/Dev-Siri/gedis/db"
+	"github.com/valyala/fasthttp"
 )
 
-func DeleteValueHandler(w http.ResponseWriter, r *http.Request) {
-	searchParams := r.URL.Query()
-
-	key := searchParams.Get("key")
+func DeleteValueHandler(ctx *fasthttp.RequestCtx) {
+	key := string(ctx.QueryArgs().Peek("key"))
 
 	if key == "*" {
 		db.DeleteAll()
@@ -18,5 +14,5 @@ func DeleteValueHandler(w http.ResponseWriter, r *http.Request) {
 		db.DeleteValue(key)
 	}
 
-	fmt.Fprintf(w, "Deleted successfully")
+	ctx.Write([]byte("Deleted successfully"))
 }

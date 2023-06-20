@@ -1,8 +1,9 @@
 #!/bin/bash
 
-bin_name=gedis
+bin_name="gedis"
 bin_path="bin"
-version="2.2.0"
+version="2.3.0"
+log_dir=$bin_path/logs
 flags=(-tags netgo -ldflags '-extldflags "-static" -s -w' -gcflags 'all=-N -l -B -C -S -D -M')
 
 declare -a os=("linux" "darwin")
@@ -13,7 +14,7 @@ if [ -d "$bin_path" ]; then
   rm -rf "$bin_path"
 fi
 
-mkdir $bin_path
+mkdir "$bin_path"
 
 for os_target in "${os[@]}"
 do
@@ -26,12 +27,16 @@ do
     export GOOS=$os_target
     export GOARCH=$arch_target
 
-    output_path=$bin_path/$bin_name-$version-$os_target-$arch_target
-    go build "${flags[@]}" -o "$output_path/$bin_name"
+    output_path="$bin_path/$bin_name-$version-$os_target-$arch_target"
+    log_file="$log_dir/build-$os_target-$arch_target.log"
+    mkdir -p $log_dir
+
+    touch $log_file
+    go build "${flags[@]}" -o "$output_path/$bin_name" &> $log_file
 
     if [ $? -eq 0 ]; then
       echo "Build successful for $os_target-$arch_target"
-      cp LICENSE.md $output_path/LICENSE.md
+      cp LICENSE.md "$output_path/LICENSE.md"
 
       if [ -n "$(find "$output_path" -type f)" ]; then
         tar -czf "$output_path.tar.gz" $output_path

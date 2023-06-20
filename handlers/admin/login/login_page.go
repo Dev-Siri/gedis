@@ -1,19 +1,19 @@
 package admin_login_handlers
 
 import (
-	"html/template"
-	"net/http"
-
 	"github.com/Dev-Siri/gedis/embeds"
+	"github.com/valyala/fasthttp"
+	"github.com/valyala/fasttemplate"
 )
 
-func LoginPage(w http.ResponseWriter, r *http.Request) {
-	template, err := template.ParseFS(embeds.Pages, "pages/login.tmpl")
+func LoginPage(ctx *fasthttp.RequestCtx) {
+	template, err := embeds.Pages.ReadFile("pages/login.tmpl")
 
 	if err != nil {
-		http.Error(w, "Failed to serve HTML", http.StatusInternalServerError)
+		ctx.Error("Failed to serve HTML", fasthttp.StatusInternalServerError)
 		return
 	}
 
-	template.Execute(w, nil)
+	ctx.SetContentType("text/html")
+	fasttemplate.Execute(string(template), "{{", "}}", ctx.Response.BodyWriter(), nil)
 }

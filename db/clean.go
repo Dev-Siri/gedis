@@ -12,14 +12,7 @@ func CleanDB() {
 	ticker := time.NewTicker(5 * time.Second)
 
 	for range ticker.C {
-		mapJsonContent, err := readFromCache()
-
-		if err != nil {
-			fmt.Println("(Error) Database cleaner: cleaning iteration failed.")
-			return
-		}
-
-		for key, data := range mapJsonContent {
+		for key, data := range storage {
 			go clearExpiredTTLValues(key, data)
 		}
 	}

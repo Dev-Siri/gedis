@@ -1,40 +1,31 @@
 package root_handlers
 
 import (
-	"net/http"
-	"strconv"
-
 	"github.com/Dev-Siri/gedis/db"
+	"github.com/valyala/fasthttp"
 )
 
-func IncrementOrDecrementValueHandler(w http.ResponseWriter, r *http.Request) {
-	searchParams := r.URL.Query()
+func IncrementOrDecrementValueHandler(ctx *fasthttp.RequestCtx) {
+	searchParams := ctx.QueryArgs()
 
-	key := searchParams.Get("key")
-	action := searchParams.Get("action")
-	amountParam := searchParams.Get("amount")
-
-	var amount string = "1"
+	key := string(searchParams.Peek("key"))
+	action := string(searchParams.Peek("action"))
+	amount := searchParams.GetUintOrZero("amount")
 
 	if key == "" {
-		http.Error(w, "Key not provided", http.StatusBadRequest)
-		return
-	}
-	
-	if amountParam != "" {
-		amount = amountParam
-	}
-
-	amountAsInt, err := strconv.Atoi(amount)
-
-	if err != nil {
-		http.Error(w, "Amount must be an integer value", http.StatusBadRequest)
+		ctx.Error("Key not provided", fasthttp.StatusBadRequest)
 		return
 	}
 
-	if action == "decrement" {	
-		db.Decrement(key, amountAsInt)
+	appliedAmount := 1
+
+	if amount > 0 {
+		appliedAmount = amount
+	}
+
+	if action == "decrement" {
+		db.Decrement(key, appliedAmount)
 	} else {
-		db.Increment(key, amountAsInt)
+		db.Increment(key, appliedAmount)
 	}
 }
