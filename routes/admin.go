@@ -7,7 +7,7 @@ import (
 )
 
 func RegisterAdminRoutes(router *fasthttprouter.Router) {
-	go router.GET("/admin", admin_handlers.AdminSession)
-	go router.GET("/admin/login", admin_login_handlers.LoginPage)
-	go router.POST("/admin/login", admin_login_handlers.FormDataLogin)
+	router.GET("/admin", admin_handlers.AdminSession)
+	router.GET("/admin/login", admin_login_handlers.LoginPage)
+	router.POST("/admin/login", admin_login_handlers.FormDataLogin)
 }

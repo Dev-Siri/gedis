@@ -13,8 +13,8 @@ func StartServer(port string) {
 
 	router.GET("/public/*filepath", routes.StaticRoutes)
 
-	go routes.RegisterRootRoutes(router)
-	go routes.RegisterAdminRoutes(router)
+	routes.RegisterRootRoutes(router)
+	routes.RegisterAdminRoutes(router)
 
 	addr := ":" + port
 

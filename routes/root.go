@@ -6,8 +6,8 @@ import (
 )
 
 func RegisterRootRoutes(router *fasthttprouter.Router) {
-	go router.GET("/", root_handlers.GetValueHandler)
-	go router.POST("/", root_handlers.SetValueHandler)
-	go router.DELETE("/", root_handlers.DeleteValueHandler)
-	go router.PATCH("/", root_handlers.IncrementOrDecrementValueHandler)
+	router.GET("/", root_handlers.GetValueHandler)
+	router.POST("/", root_handlers.SetValueHandler)
+	router.DELETE("/", root_handlers.DeleteValueHandler)
+	router.PATCH("/", root_handlers.IncrementOrDecrementValueHandler)
 }

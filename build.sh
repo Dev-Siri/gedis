@@ -4,7 +4,7 @@ bin_name="gedis"
 bin_path="bin"
 version="2.3.0"
 log_dir=$bin_path/logs
-flags=(-tags netgo -ldflags '-extldflags "-static" -s -w' -gcflags 'all=-N -l -B -C -S -D -M')
+flags=(-tags netgo -ldflags '-extldflags "-static" -s -w')
 
 declare -a os=("linux" "darwin")
 declare -a arch=("amd64" "arm64" "arm")
@@ -15,6 +15,20 @@ if [ -d "$bin_path" ]; then
 fi
 
 mkdir "$bin_path"
+
+while [[ $# -gt 0 ]]; do
+  key="$1"
+  case $key in
+    -race)
+      flags+=(-race)
+      shift
+      ;;
+    *)
+      echo "Unrecognized option: $key"
+      shift
+      ;;
+  esac
+done
 
 for os_target in "${os[@]}"
 do
@@ -28,11 +42,8 @@ do
     export GOARCH=$arch_target
 
     output_path="$bin_path/$bin_name-$version-$os_target-$arch_target"
-    log_file="$log_dir/build-$os_target-$arch_target.log"
-    mkdir -p $log_dir
 
-    touch $log_file
-    go build "${flags[@]}" -o "$output_path/$bin_name" &> $log_file
+    go build "${flags[@]}" -o "$output_path/$bin_name"
 
     if [ $? -eq 0 ]; then
       echo "Build successful for $os_target-$arch_target"
