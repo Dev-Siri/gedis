@@ -111,18 +111,19 @@ Here you can send `GET`, `POST` (`SET`) & `DELETE` Requests to perform actions o
 ## Getting Started
 
 - Clone the repo
+
 ```sh
 $ git clone https://github.com/Dev-Siri/gedis.git
 ```
 
 - Compile the project. Make sure you have [Go](https://go.dev) installed on your system. Then run the build.sh file.
-```sh
-$ chmod +x build.sh
 
+```sh
 $ ./build.sh
 ```
 
 - Then run the binary according to your CPU architecture & OS.
+
 ```sh
 $ ./bin/gedis-[VERSION]-[OS]-[ARCH]/gedis
 ```
