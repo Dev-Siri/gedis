@@ -1,5 +1,5 @@
 ---
-import { Icon } from "astro-icon";
+import { Icon } from "astro-icon/components";
 
 interface Props {
   icon: string;
@@ -13,9 +13,9 @@ const { icon, href } = Astro.props;
   href={href}
   target="_blank"
   download
-  class="flex items-center gap-2 bg-black p-4 rounded-md border-gray-700 border-2"
+  class="flex items-center gap-2 bg-black shadow-md py-2 p-4 rounded-lg duration-200 hover:bg-[#1e1e1e]"
 >
-  <Icon name={icon} height={30} width={30} />
+  <Icon name={icon} height={15} width={15} />
   <p class="font-bold">
     <slot />
   </p>

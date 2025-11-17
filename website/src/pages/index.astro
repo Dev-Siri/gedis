@@ -1,13 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
-import Logo from "../components/icons/Logo.astro";
-import Go from "../components/icons/Go.astro";
 import DownloadButton from "../components/DownloadButton.astro";
-import Documentation from "../components/Documentation.astro";
+import Go from "../components/icons/Go.astro";
+import Logo from "../components/icons/Logo.astro";
 
-import { MAC_VERSIONS, LINUX_VERSIONS } from "../data";
-import ApplicationData from "../components/ApplicationData.astro";
+import { LINUX_VERSIONS, MAC_VERSIONS } from "../data";
 ---
 
 <Layout
@@ -20,7 +18,7 @@ import ApplicationData from "../components/ApplicationData.astro";
     <p class="text-2xl flex gap-2 items-center">
       A fast, Redis inspired, in-memory database written in <Go />
     </p>
-    <div class="flex mt-10 gap-10">
+    <div class="flex mt-4 gap-2">
       {
         MAC_VERSIONS.map(({ url, arch }) => (
           <DownloadButton href={url} icon="fa:apple">
@@ -29,7 +27,7 @@ import ApplicationData from "../components/ApplicationData.astro";
         ))
       }
     </div>
-    <div class="flex mt-10 gap-10">
+    <div class="flex mt-2 gap-2">
       {
         LINUX_VERSIONS.map(({ url, arch }) => (
           <DownloadButton href={url} icon="fa:linux">
@@ -38,20 +36,5 @@ import ApplicationData from "../components/ApplicationData.astro";
         ))
       }
     </div>
-    <p class="text-2xl mt-10">
-      Windows build? Idc. Use WSL or something ¯\_(ツ)_/¯
-    </p>
-  </section>
-  <section class="pt-28">
-    <h2 class="font-bold text-6xl leading-relaxed">
-      Ok cool, but how to use this?
-    </h2>
-    <Documentation />
-  </section>
-  <section>
-    <h3 class="font-bold text-5xl my-8 leading-relaxed">
-      But what about accessing data from apps?
-    </h3>
-    <ApplicationData />
   </section>
 </Layout>

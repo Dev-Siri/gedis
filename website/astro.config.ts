@@ -1,9 +1,11 @@
-import { defineConfig } from "astro/config";
-import tailwind from "@astrojs/tailwind";
+import tailwindcss from "@tailwindcss/vite";
 import compress from "astro-compress";
-
-import mdx from "@astrojs/mdx";
+import icon from "astro-icon";
+import { defineConfig } from "astro/config";
 
 export default defineConfig({
-  integrations: [tailwind(), compress(), mdx()],
+  integrations: [compress(), icon()],
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });

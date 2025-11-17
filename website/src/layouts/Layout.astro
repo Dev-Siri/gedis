@@ -1,9 +1,9 @@
 ---
-import { Icon } from "astro-icon";
+import { Icon } from "astro-icon/components";
 import "../styles/globals.css";
 
-import { REPO_LINK } from "../data";
 import Footer from "../components/Footer.astro";
+import { REPO_LINK } from "../data";
 
 export interface Props {
   title: string;
@@ -14,7 +14,7 @@ const { title, description } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
@@ -28,8 +28,8 @@ const { title, description } = Astro.props;
     <meta name="og:site_name" content="Gedis" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:site" content="@WebDev_Siri" />
-    <meta name="twitter:creator" content="@WebDev_Siri" />
+    <meta name="twitter:site" content="@DevSiriTweets" />
+    <meta name="twitter:creator" content="@DevSiriTweets" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://gedis.vercel.app" />
